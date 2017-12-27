@@ -1,0 +1,23 @@
+services:
+
+    infakt:
+        class: Infakt\Infakt
+        public: true
+        arguments:
+            - '@infakt_client.data_collector_client'
+            - { api_key: '%infakt_client.api_key%' }
+
+    infakt_client.data_collector_client:
+        class: Infakt\ClientBundle\Client\DataCollectorClient
+        public: false
+
+    data_collector.infakt:
+        class: Infakt\ClientBundle\DataCollector\ClientDataCollector
+        arguments:
+            - '@infakt_client.data_collector_client'
+        public: false
+        tags:
+            -
+                name: data_collector
+                id: 'app.infakt_collector'
+                template: '@InfaktClient/Collector/infakt.html.twig'

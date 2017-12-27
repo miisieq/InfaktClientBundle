@@ -1,0 +1,53 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set time = '%0.0f'|format(collector.totalTime) %}
+    {% set icon %}
+        {{ include('@InfaktClient/Collector/icon-gray.svg') }}
+        <span class="sf-toolbar-value">{{ collector.data|length }}</span>
+        <span class="sf-toolbar-label">in</span>
+        <span class="sf-toolbar-value">{{ time }}</span>
+        <span class="sf-toolbar-label">ms</span>
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
+{% endblock %}
+
+
+{% block menu %}
+    <span class="label {{ false ? 'disabled' }}">
+        <span class="icon">{{ include('@InfaktClient/Collector/icon-white.svg') }}</span>
+        <strong>Infakt</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+<h2>Infakt</h2>
+
+    <table id="router-logs">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th class="text-center">Status</th>
+            <th>Method</th>
+            <th>Time</th>
+            <th>URL</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for trace in collector.data %}
+            {% set css_class = result.status_code|default(0) > 399 ? 'status-error' : result.status_code|default(0) > 299 ? 'status-warning' : 'status-success' %}
+
+            <tr>
+                <td class="font-normal text-muted nowrap">{{ loop.index }}</td>
+                <td class="text-center">
+                    <span class="label {{ css_class }}">{{ trace.responseCode }}</span>
+                </td>
+                <td>{{ trace.requestMethod|upper }}</td>
+                <td>{{ trace.responseTime }} ms</td>
+                <td>{{ trace.requestUri }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
