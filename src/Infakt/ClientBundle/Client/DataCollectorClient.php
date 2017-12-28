@@ -14,7 +14,8 @@ class DataCollectorClient extends GuzzleClient
     /**
      * @param string $method
      * @param string $uri
-     * @param array $options
+     * @param array  $options
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function request($method, $uri = '', array $options = [])
@@ -27,7 +28,7 @@ class DataCollectorClient extends GuzzleClient
             $method,
             $uri,
             $response->getStatusCode(),
-            (int)round((microtime(true) - $startTime) * 1000, 0),
+            (int) round((microtime(true) - $startTime) * 1000, 0),
             $response->getBody()->getContents()
         );
 
@@ -45,7 +46,7 @@ class DataCollectorClient extends GuzzleClient
     }
 
     /**
-     * Collect request and response data
+     * Collect request and response data.
      *
      * @param $requestMethod
      * @param $requestUri
