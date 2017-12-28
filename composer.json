@@ -1,0 +1,23 @@
+{
+    "name": "miisieq/infakt-client-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michał Szczech",
+            "email": "m.szczech@hotmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Infakt\\ClientBundle\\": "src/Infakt/ClientBundle/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5",
+        "satooshi/php-coveralls": "^2.0"
+    },
+    "require": {
+        "miisieq/infakt-client": "dev-master"
+    }
+}
