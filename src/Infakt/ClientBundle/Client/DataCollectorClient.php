@@ -38,7 +38,6 @@ class DataCollectorClient extends GuzzleClient
 
             return $response;
         } catch (BadResponseException $e) {
-
             $this->collectRequest(
                 $method,
                 $uri,
