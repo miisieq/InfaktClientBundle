@@ -3,6 +3,7 @@
 namespace Infakt\ClientBundle\Client;
 
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\BadResponseException;
 
 class DataCollectorClient extends GuzzleClient
 {
@@ -22,19 +23,34 @@ class DataCollectorClient extends GuzzleClient
     {
         $startTime = microtime(true);
 
-        $response = parent::request($method, $uri, $options);
+        try {
+            $response = parent::request($method, $uri, $options);
 
-        $this->collectRequest(
-            $method,
-            $uri,
-            $response->getStatusCode(),
-            (int) round((microtime(true) - $startTime) * 1000, 0),
-            $response->getBody()->getContents()
-        );
+            $this->collectRequest(
+                $method,
+                $uri,
+                $response->getStatusCode(),
+                (int) round((microtime(true) - $startTime) * 1000, 0),
+                $response->getBody()->getContents()
+            );
 
-        $response->getBody()->rewind();
+            $response->getBody()->rewind();
 
-        return $response;
+            return $response;
+        } catch (BadResponseException $e) {
+
+            $this->collectRequest(
+                $method,
+                $uri,
+                $e->getResponse()->getStatusCode(),
+                (int) round((microtime(true) - $startTime) * 1000, 0),
+                $e->getResponse()->getBody()->getContents()
+            );
+
+            $e->getResponse()->getBody()->rewind();
+
+            return $e->getResponse();
+        }
     }
 
     /**

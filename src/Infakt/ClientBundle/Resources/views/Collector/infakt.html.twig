@@ -36,7 +36,7 @@
         </thead>
         <tbody>
         {% for trace in collector.data %}
-            {% set css_class = result.status_code|default(0) > 399 ? 'status-error' : result.status_code|default(0) > 299 ? 'status-warning' : 'status-success' %}
+            {% set css_class = trace.responseCode > 399 ? 'status-error' : trace.responseCode > 299 ? 'status-warning' : 'status-success' %}
 
             <tr>
                 <td class="font-normal text-muted nowrap">{{ loop.index }}</td>
