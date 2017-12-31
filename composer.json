@@ -1,5 +1,6 @@
 {
     "name": "miisieq/infakt-client-bundle",
+    "description": "The InfaktClientBundle provides integration of the InfaktClient library into the Symfony framework.",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
