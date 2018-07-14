@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Infakt\ClientBundle\Client;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\BadResponseException;
+use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Extended \GuzzleHttp\Client which collects information about requests.
+ */
 class DataCollectorClient extends GuzzleClient
 {
     /**
@@ -19,7 +25,7 @@ class DataCollectorClient extends GuzzleClient
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function request($method, $uri = '', array $options = [])
+    public function request($method, $uri = '', array $options = []): ResponseInterface
     {
         $startTime = microtime(true);
 
@@ -55,7 +61,7 @@ class DataCollectorClient extends GuzzleClient
     /**
      * @return array
      */
-    public function getCollectedData()
+    public function getCollectedData(): array
     {
         return $this->requests;
     }
@@ -63,14 +69,19 @@ class DataCollectorClient extends GuzzleClient
     /**
      * Collect request and response data.
      *
-     * @param $requestMethod
-     * @param $requestUri
-     * @param $responseCode
-     * @param $responseTime
-     * @param $responseBody
+     * @param string $requestMethod
+     * @param string$requestUri
+     * @param int    $responseCode
+     * @param int    $responseTime
+     * @param string $responseBody
      */
-    protected function collectRequest($requestMethod, $requestUri, $responseCode, $responseTime, $responseBody)
-    {
+    protected function collectRequest(
+        string $requestMethod,
+        string $requestUri,
+        int $responseCode,
+        int $responseTime,
+        string $responseBody
+    ): void {
         $this->requests[] = [
             'requestMethod' => $requestMethod,
             'requestUri' => $requestUri,

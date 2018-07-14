@@ -4,8 +4,8 @@ services:
         class: Infakt\Infakt
         public: true
         arguments:
+            - '%infakt_client.api_key%'
             - '@infakt_client.data_collector_client'
-            - { api_key: '%infakt_client.api_key%' }
 
     infakt_client.data_collector_client:
         class: Infakt\ClientBundle\Client\DataCollectorClient
@@ -21,3 +21,19 @@ services:
                 name: data_collector
                 id: 'app.infakt_collector'
                 template: '@InfaktClient/Collector/infakt.html.twig'
+
+    Infakt\Repository\BankAccountRepository:
+        arguments: ['@infakt']
+        public: false
+
+    Infakt\Repository\ClientRepository:
+        arguments: ['@infakt']
+        public: false
+
+    Infakt\Repository\InvoiceRepository:
+        arguments: ['@infakt']
+        public: false
+
+    Infakt\Repository\VatRateRepository:
+        arguments: ['@infakt']
+        public: false

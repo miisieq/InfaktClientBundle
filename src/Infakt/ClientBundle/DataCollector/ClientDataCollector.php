@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Infakt\ClientBundle\DataCollector;
 
 use Infakt\ClientBundle\Client\DataCollectorClient;
@@ -7,19 +9,33 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
+/**
+ * Class ClientDataCollector.
+ */
 class ClientDataCollector extends DataCollector
 {
+    /**
+     * ClientDataCollector constructor.
+     *
+     * @param DataCollectorClient $client
+     */
     public function __construct(DataCollectorClient $client)
     {
         $this->data = $client->getCollectedData();
     }
 
-    public function getData()
+    /**
+     * @return array
+     */
+    public function getData(): array
     {
         return $this->data;
     }
 
-    public function getTotalTime()
+    /**
+     * @return int
+     */
+    public function getTotalTime(): int
     {
         $time = 0;
 
@@ -33,14 +49,14 @@ class ClientDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, \Exception $exception = null): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function reset()
+    public function reset(): void
     {
         $this->data = [];
     }
@@ -50,7 +66,7 @@ class ClientDataCollector extends DataCollector
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'app.infakt_collector';
     }
