@@ -52,9 +52,7 @@ class DataCollectorClient extends GuzzleClient
                 $e->getResponse()->getBody()->getContents()
             );
 
-            $e->getResponse()->getBody()->rewind();
-
-            return $e->getResponse();
+            throw $e;
         }
     }
 
