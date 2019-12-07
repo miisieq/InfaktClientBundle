@@ -1,8 +1,10 @@
 services:
 
+    Infakt\Infakt: '@infakt'
+
     infakt:
         class: Infakt\Infakt
-        public: true
+        public: false
         arguments:
             - '%infakt_client.api_key%'
             - '@infakt_client.data_collector_client'

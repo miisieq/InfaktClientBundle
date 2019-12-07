@@ -14,13 +14,13 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('infakt_client');
+        $treeBuilder = new TreeBuilder('infakt_client');
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->children()
                 ->scalarNode('api_key')->isRequired()
-            ->end();
+            ->end()
+        ;
 
         return $treeBuilder;
     }
